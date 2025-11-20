@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
 import { usePbAuthStore, usePbList, usePbLive } from "use-pocketbase";
 import { decToHex } from "../util/color";
+import { useTopBarColor } from "../util/useTopBar";
 
 const lists = [
   {
@@ -39,6 +40,8 @@ const lists = [
 ];
 
 export function HomePage() {
+  useTopBarColor("var(--color-base-100)");
+
   const { record: user, clear } = usePbAuthStore();
 
   const { data: myLists } = usePbList("lists");

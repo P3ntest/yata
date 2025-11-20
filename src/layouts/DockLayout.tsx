@@ -1,6 +1,8 @@
 import { MdContentPaste, MdHome, MdPeople } from "react-icons/md";
 import { Outlet, useLocation, useNavigate } from "react-router";
 import { twMerge } from "tailwind-merge";
+import useDetectKeyboardOpen from "use-detect-keyboard-open";
+import { motion } from "motion/react";
 
 const dockItems = [
   {
@@ -23,14 +25,15 @@ const dockItems = [
 export function DockLayout() {
   const currentPath = useLocation().pathname;
   const navigate = useNavigate();
+  const keyboardOpen = useDetectKeyboardOpen();
 
   return (
     <div>
-      <div
-        className="dock bg-base-300"
-        style={{
-          marginBottom: "env(safe-area-inset-bottom)",
+      <motion.div
+        animate={{
+          scaleY: keyboardOpen ? 0 : 1,
         }}
+        className="dock dock-lg bg-base-300"
       >
         {dockItems.map((item, index) => {
           return (
@@ -48,7 +51,7 @@ export function DockLayout() {
             </button>
           );
         })}
-      </div>
+      </motion.div>
       <Outlet />
     </div>
   );

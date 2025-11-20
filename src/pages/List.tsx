@@ -11,8 +11,11 @@ import { motion } from "motion/react";
 import { div } from "motion/react-client";
 import { useOnClickOutside } from "usehooks-ts";
 import { MdArrowBack } from "react-icons/md";
+import { useTopBarColor } from "../util/useTopBar";
 
 export function ListView() {
+  useTopBarColor("var(--color-base-200)");
+
   const { listId } = useParams<{ listId: string }>();
   const { data: items, refetch } = usePbFullList("items", {
     query: {
@@ -44,7 +47,7 @@ export function ListView() {
         </button>
         <h1 className="font-bold text-lg">{list?.name}</h1>
       </div>
-      <div className="p-4">
+      <div className="p-4 bg-base-100">
         {items
           ?.sort((a) => a.completed)
           .map((item) => (
@@ -111,7 +114,10 @@ function CreateDock({ listId }: { listId: string }) {
   const [name, setName] = useState("");
   const [open, setOpen] = useState(false);
 
-  useOnClickOutside(ref as RefObject<HTMLDivElement>, () => setOpen(false));
+  //   useOnClickOutside(ref as RefObject<HTMLDivElement>, () => {
+  //     setOpen(false);
+  //     inputRef.current?.blur();
+  //   });
 
   return (
     <div
